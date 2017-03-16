@@ -306,8 +306,15 @@ AsYouType.prototype.getPhoneNumber = function( )
 	return new PhoneNumber( this._number, this._regionCode );
 }
 
-
-goog.global = ( typeof exports !== 'undefined' ) ? exports : window;
+if ( typeof exports !== 'undefined' ) {
+	goog.global = exports;
+} else if ( typeof window !== 'undefined' ) {
+	goog.global = window;
+} else if ( typeof self !== 'undefined' ) {
+	goog.global = self;
+} else {
+	throw 'No suitable global found';
+}
 
 goog.exportSymbol( 'PhoneNumber', PhoneNumber );
 
